@@ -1,8 +1,12 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import "./Decrypt.css"
+
 
 function Decrypt() {
   return (
-    <div>
+    <div className='Decrypt'>
+        <Navbar/>
       
     </div>
   )

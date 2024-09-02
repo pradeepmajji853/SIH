@@ -1,8 +1,11 @@
 import React from 'react'
+import Navbar from '../components/Navbar'
+import "./Aboutus.css"
 
 function Aboutus() {
   return (
-    <div>
+    <div className='Aboutus'>
+        <Navbar/>
       
     </div>
   )

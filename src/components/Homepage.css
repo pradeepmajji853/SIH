@@ -1,0 +1,11 @@
+.Homepage{
+    color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30vh;
+    font-size: 1.8rem;
+    padding-left:15%;
+    padding-right: 15%;
+}
