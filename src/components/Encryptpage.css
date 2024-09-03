@@ -1,56 +1,69 @@
 .Encrypt-page {
-    color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-top: 15vh;
-    font-size: 1.8rem;
-    text-align: center;
-    padding: 0 15%;
-  }
-  
-  .text-content {
-    margin-top: 1rem;
-    line-height: 1.5;
-  }
-  
-  .encryption-form {
-    margin-top: 2rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .text-input, .algorithm-select {
-    width: 100%;
-    max-width: 500px;
-    height: 40px; 
-    margin-bottom: 1rem;
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 40px; 
-    border: 1px solid #ccc;
-    background-color: #f0f0f0; 
-     }
-  
-  .text-input:focus, .algorithm-select:focus {
-    outline: none;
-    border-color: #06284c; 
-    box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2),
-                inset -2px -2px 5px rgba(255, 255, 255, 0.8);
-  }
-  
-  .submit-button {
-    padding: 0.5rem 1rem;
-    font-size: 1rem;
-    background-color: #0a2541;
-    color: white;
-    border: none;
-    border-radius: 30px; 
-    cursor: pointer;
-  }
-  
-  .submit-button:hover {
-    background-color: #071b31;
-  }
-  
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 15vh;
+  font-size: 1.8rem;
+  text-align: center;
+  padding: 0 15%;
+}
+
+.text-content {
+  margin-top: 1rem;
+  line-height: 1.5;
+}
+
+.encryption-form {
+  margin-top: 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.text-input,
+.algorithm-select {
+  width: 100%;
+  max-width: 500px;
+  height: 40px;
+  margin-bottom: 1rem;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 40px;
+  border: 1px solid #ccc;
+  background-color: #f0f0f0;
+  box-sizing: border-box; /* Ensures padding doesn't affect width */
+  text-align: left; /* Consistent text alignment */
+}
+
+.text-input::placeholder {
+  color: #999; /* Optional: Placeholder color for better readability */
+}
+
+.algorithm-select {
+  appearance: none; /* Standardizes the look of the select box */
+  -webkit-appearance: none; /* Safari-specific styling reset */
+  padding-right: 2.5rem; /* Adjusts padding to prevent arrow overlap */
+}
+
+.text-input:focus,
+.algorithm-select:focus {
+  outline: none;
+  border-color: #06284c;
+  box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2),
+    inset -2px -2px 5px rgba(255, 255, 255, 0.8);
+}
+
+.submit-button {
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  background-color: #0a2541;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+}
+
+.submit-button:hover {
+  background-color: #071b31;
+}
