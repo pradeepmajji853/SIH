@@ -22,6 +22,7 @@
 }
 @media (max-width:768px) {
     .Decrypt-page{
+        margin-top: 5vh;
       padding: 5%;
       font-size:1.5rem;  
     }
