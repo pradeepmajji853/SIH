@@ -20,3 +20,10 @@
     margin-top: 1rem;
     line-height: 1.5;
 }
+@media (max-width:768px) {
+    .Decrypt-page{
+      padding: 5%;
+      font-size:1.5rem;  
+    }
+    
+}

@@ -67,3 +67,10 @@
 .submit-button:hover {
   background-color: #071b31;
 }
+@media (max-width:768px) {
+  .Encrypt-page{
+    padding: 5%;
+    font-size:1.5rem;  
+  }
+  
+}
