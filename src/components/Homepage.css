@@ -18,6 +18,11 @@
     
     line-height: 1.5;
 }
+.homepage-image {
+    width: 100%;
+    max-width: 600px; 
+    margin-bottom: 1rem;
+}
 .text-content p{
     margin-bottom: 15px;
 }
