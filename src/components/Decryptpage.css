@@ -1,4 +1,4 @@
-.Homepage {
+.Decrypt-page{
     color: white;
     display: flex;
     flex-direction: column;
@@ -10,7 +10,7 @@
     padding: 0 15%;
 }
 
-.homepage-image {
+.Decrypt-page img {
     width: 100%;
     max-width: 600px; 
     margin-bottom: 1rem;

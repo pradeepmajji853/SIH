@@ -4,7 +4,6 @@ import Layout from './Layouts/Layout';
 import Home from './pages/Home';
 import Encrypt from './pages/Encrypt';
 import Decrypt from './pages/Decrypt';
-import Aboutus from './pages/Aboutus';
 
 
 function App() {
@@ -41,15 +40,7 @@ function App() {
             </Layout>
           }
         />
-        <Route
-          path="/about-us"
-          element={
-            <Layout>
-              <Aboutus />
-            </Layout>
-          }
-        />
-
+        
 
 
       </Routes>

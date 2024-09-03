@@ -8,7 +8,7 @@
   
 
   .Navbar img {
-    max-width: 150px;
+    max-width: 250px;
     height: auto;
     cursor: pointer;
   }
@@ -36,7 +36,7 @@
     font-family: 'Oswald', sans-serif;
     font-weight: 450;
     transition: all 0.3s ease;
-    width: 180px;
+    width: 150px;
     position: relative;
   }
   
