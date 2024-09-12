@@ -111,7 +111,7 @@ function Encryptpage() {
 
         <select value={algorithm} onChange={handleAlgorithmChange} className='algorithm-select'>
           <option value="">Select Algorithm</option>
-          <option value="AES">AES</option>
+          <option value="AES">AES256</option>
         </select>
         <button type="submit" className='submit-button'>Encrypt</button>
       </form>
