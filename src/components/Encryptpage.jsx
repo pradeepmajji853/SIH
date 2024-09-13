@@ -34,11 +34,34 @@ function Encryptpage() {
         case 'AES':
           const encrypted = await encryptAES(text, password);
           setCipherText(encrypted);
+
+          // Sending data to the backend
+          const response = await fetch('http://localhost:5000/encrypt', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              text,
+              algorithm,
+              cipherText: encrypted,
+              generatedPassword: password,
+            }),
+          });
+
+          // Handling response
+          if (!response.ok) {
+            const errorMessage = await response.text();
+            console.error('Error from server:', errorMessage);
+            alert('Failed to save encrypted data. Please try again.');
+            return;
+          }
+
+          setShowPopup(true);
           break;
         default:
           alert('Selected algorithm is not implemented.');
       }
-      setShowPopup(true);
     } catch (error) {
       console.error('Encryption failed:', error);
       alert('Error during encryption.');
