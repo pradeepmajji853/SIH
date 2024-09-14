@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import './Encryptpage.css';
+import CryptoJS from 'crypto-js';
+import forge from 'node-forge';
 
 const generateRandomPassword = (length = 16) => {
   const characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789@#$%&*';
@@ -25,86 +27,75 @@ function Encryptpage() {
     setAlgorithm(e.target.value);
   };
 
-  const handleEncrypt = async () => {
+  const handleEncrypt = () => {
     const password = generateRandomPassword();
     setGeneratedPassword(password);
 
     try {
       switch (algorithm) {
         case 'AES':
-          const encrypted = await encryptAES(text, password);
-          setCipherText(encrypted);
-
-          // Sending data to the backend
-          const response = await fetch('http://localhost:5000/encrypt', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              text,
-              algorithm,
-              cipherText: encrypted,
-              generatedPassword: password,
-            }),
-          });
-
-          // Handling response
-          if (!response.ok) {
-            const errorMessage = await response.text();
-            console.error('Error from server:', errorMessage);
-            alert('Failed to save encrypted data. Please try again.');
-            return;
-          }
-
+          const aesEncrypted = CryptoJS.AES.encrypt(text, password).toString();
+          setCipherText(aesEncrypted);
           setShowPopup(true);
+          break;
+        case 'DES':
+          const desEncrypted = CryptoJS.DES.encrypt(text, password).toString();
+          setCipherText(desEncrypted);
+          setShowPopup(true);
+          break;
+        case 'TripleDES':
+          const tripleDesEncrypted = CryptoJS.TripleDES.encrypt(text, password).toString();
+          setCipherText(tripleDesEncrypted);
+          setShowPopup(true);
+          break;
+        case 'Blowfish':
+          const blowfishEncrypted = forge.cipher.createCipher('Blowfish', password);
+          blowfishEncrypted.start();
+          blowfishEncrypted.update(forge.util.createBuffer(text));
+          blowfishEncrypted.finish();
+          setCipherText(forge.util.encode64(blowfishEncrypted.output.getBytes()));
+          setShowPopup(true);
+          break;
+        case 'ChaCha20':
+          // Implement ChaCha20 encryption
+          alert('ChaCha20 not implemented yet');
+          break;
+        case 'RSA':
+          // Implement RSA encryption
+          alert('RSA encryption not implemented yet');
+          break;
+        case 'RC4':
+          const rc4Encrypted = CryptoJS.RC4.encrypt(text, password).toString();
+          setCipherText(rc4Encrypted);
+          setShowPopup(true);
+          break;
+        case 'Camellia':
+          // Implement Camellia encryption
+          alert('Camellia not implemented yet');
+          break;
+        case 'Serpent':
+          // Implement Serpent encryption
+          alert('Serpent not implemented yet');
+          break;
+        case 'ElGamal':
+          // Implement ElGamal encryption
+          alert('ElGamal not implemented yet');
+          break;
+        case 'ECC':
+          // Implement ECC encryption
+          alert('ECC not implemented yet');
+          break;
+        case 'GOST':
+          // Implement GOST encryption
+          alert('GOST not implemented yet');
           break;
         default:
           alert('Selected algorithm is not implemented.');
       }
     } catch (error) {
       console.error('Encryption failed:', error);
-      alert('Error during encryption.');
+      alert('Error during encryption: ' + error.message);
     }
-  };
-
-  const encryptAES = async (text, password) => {
-    const encoder = new TextEncoder();
-    const salt = window.crypto.getRandomValues(new Uint8Array(16));
-    const iv = window.crypto.getRandomValues(new Uint8Array(12));
-
-    const keyMaterial = await window.crypto.subtle.importKey(
-      'raw',
-      encoder.encode(password),
-      'PBKDF2',
-      false,
-      ['deriveKey']
-    );
-
-    const key = await window.crypto.subtle.deriveKey(
-      {
-        name: 'PBKDF2',
-        salt: salt,
-        iterations: 100000,
-        hash: 'SHA-256',
-      },
-      keyMaterial,
-      { name: 'AES-GCM', length: 256 },
-      true,
-      ['encrypt', 'decrypt']
-    );
-
-    const encrypted = await window.crypto.subtle.encrypt(
-      {
-        name: 'AES-GCM',
-        iv: iv,
-      },
-      key,
-      encoder.encode(text)
-    );
-
-    const combined = new Uint8Array([...salt, ...iv, ...new Uint8Array(encrypted)]);
-    return btoa(String.fromCharCode(...combined));
   };
 
   const handleSubmit = (e) => {
@@ -135,6 +126,17 @@ function Encryptpage() {
         <select value={algorithm} onChange={handleAlgorithmChange} className='algorithm-select'>
           <option value="">Select Algorithm</option>
           <option value="AES">AES256</option>
+          <option value="DES">DES</option>
+          <option value="TripleDES">Triple DES</option>
+          <option value="Blowfish">Blowfish</option>
+          <option value="ChaCha20">ChaCha20</option>
+          <option value="RSA">RSA</option>
+          <option value="RC4">RC4</option>
+          <option value="Camellia">Camellia</option>
+          <option value="Serpent">Serpent</option>
+          <option value="ElGamal">ElGamal</option>
+          <option value="ECC">ECC</option>
+          <option value="GOST">GOST</option>
         </select>
         <button type="submit" className='submit-button'>Encrypt</button>
       </form>
