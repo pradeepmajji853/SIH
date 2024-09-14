@@ -19,6 +19,6 @@
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
-    filter: blur(8px); /* Adjust the blur value as needed */
+    filter: blur(2px); /* Adjust the blur value as needed */
     z-index: -1; /* Put the blur behind the content */
 }
