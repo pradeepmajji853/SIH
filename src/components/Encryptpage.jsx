@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Encryptpage.css';
 import CryptoJS from 'crypto-js';
 import forge from 'node-forge';
@@ -27,26 +27,29 @@ function Encryptpage() {
     setAlgorithm(e.target.value);
   };
 
-  const handleEncrypt = () => {
+  const handleEncrypt = async () => {
     const password = generateRandomPassword();
     setGeneratedPassword(password);
 
     try {
       switch (algorithm) {
         case 'AES':
-          const aesEncrypted = CryptoJS.AES.encrypt(text, password).toString();
-          setCipherText(aesEncrypted);
-          setShowPopup(true);
-          break;
+  const iv = CryptoJS.lib.WordArray.random(16); // Random IV
+  const aesEncrypted = CryptoJS.AES.encrypt(text, CryptoJS.enc.Utf8.parse(password), {
+    iv: iv,
+    mode: CryptoJS.mode.CBC,
+    padding: CryptoJS.pad.Pkcs7
+  }).toString();
+  setCipherText(aesEncrypted);
+  break;
+
         case 'DES':
           const desEncrypted = CryptoJS.DES.encrypt(text, password).toString();
           setCipherText(desEncrypted);
-          setShowPopup(true);
           break;
         case 'TripleDES':
           const tripleDesEncrypted = CryptoJS.TripleDES.encrypt(text, password).toString();
           setCipherText(tripleDesEncrypted);
-          setShowPopup(true);
           break;
         case 'Blowfish':
           const blowfishEncrypted = forge.cipher.createCipher('Blowfish', password);
@@ -54,7 +57,6 @@ function Encryptpage() {
           blowfishEncrypted.update(forge.util.createBuffer(text));
           blowfishEncrypted.finish();
           setCipherText(forge.util.encode64(blowfishEncrypted.output.getBytes()));
-          setShowPopup(true);
           break;
         case 'ChaCha20':
           // Implement ChaCha20 encryption
@@ -67,7 +69,6 @@ function Encryptpage() {
         case 'RC4':
           const rc4Encrypted = CryptoJS.RC4.encrypt(text, password).toString();
           setCipherText(rc4Encrypted);
-          setShowPopup(true);
           break;
         case 'Camellia':
           // Implement Camellia encryption
@@ -92,6 +93,7 @@ function Encryptpage() {
         default:
           alert('Selected algorithm is not implemented.');
       }
+      setShowPopup(true);
     } catch (error) {
       console.error('Encryption failed:', error);
       alert('Error during encryption: ' + error.message);
@@ -149,6 +151,7 @@ function Encryptpage() {
           <textarea readOnly value={cipherText} rows="4" className='cipher-text'></textarea>
           <button onClick={handleCopy} className='copy-button'>Copy Cipher Text</button>
           <button onClick={() => setShowPopup(false)} className='close-button'>Close</button>
+
         </div>
       )}
     </div>
